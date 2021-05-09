@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbclass.mapper.DownloadMapper">
+    <resultMap id="BaseResultMap" type="com.nbclass.model.Download">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="download_number" jdbcType="INTEGER" property="downloadNumber" />
+        <result column="applicant_id" jdbcType="VARCHAR" property="applicantId"/>
+        <result column="application_name" jdbcType="VARCHAR" property="applicationName"/>
+        <result column="application_time" jdbcType="VARCHAR" property="applicationTime"/>
+        <result column="checker_id" jdbcType="VARCHAR" property="checkerId"/>
+        <result column="checker_name" jdbcType="VARCHAR" property="checkerName"/>
+        <result column="check_time" jdbcType="VARCHAR" property="checkTime"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="zip_password" jdbcType="VARCHAR" property="zipPassword"/>
+        <result column="zip_file" jdbcType="VARCHAR" property="zipFile"/>
+        <result column="size" jdbcType="INTEGER" property="size"/>
+        <result column="last_download_time" jdbcType="TIMESTAMP" property="lastDownloadTime"/>
+        <result column="download_count" jdbcType="INTEGER" property="downloadCount"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="application_remark" jdbcType="VARCHAR" property="applicationRemark"/>
+        <result column="check_remark" jdbcType="VARCHAR" property="checkRemark"/>
+        <collection property="fileInfoList" javaType="ArrayList" column="id" ofType="FileInfo" select="com.nbclass.mapper.FileInfoMapper.selectFileInfoByDownloadId"/>
+    </resultMap>
+    <sql id="baseColumn">
+        id, applicant_id, download_number,application_name, application_time, checker_id, checker_name, check_time, `status`, zip_password, zip_file ,size, last_download_time, download_count, update_time, check_remark, application_remark
+    </sql>
+
+    <select id="selectMydownloads" resultMap="BaseResultMap">
+        SELECT
+         <include refid="baseColumn"/>
+         FROM download  where applicant_id = #{applicantId} order by download_number desc
+    </select>
+
+    <select id="selectDownloadsByStatus" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM download  where status = #{status} order by download_number desc
+    </select>
+
+    <select id="selectDownloadById" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseColumn"/>
+        FROM download  where id = #{id}
+    </select>
+
+
+
+  <!--<select id="selectMydownloads_COUNT" resultType="Long">
+    SELECT
+        count(*)
+    FROM download d
+    where d.applicant_id = #{applicantId}
+  </select>-->
+</mapper>

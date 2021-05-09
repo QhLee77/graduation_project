@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nbclass.mapper.FileInfoMapper">
+  <resultMap id="BaseResultMap" type="com.nbclass.model.FileInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="file_number" jdbcType="INTEGER" property="fileNumber" />
+    <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+    <result column="md5" jdbcType="VARCHAR" property="md5" />
+    <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+    <result column="category_name" jdbcType="VARCHAR" property="categoryName" />
+    <result column="space_id" jdbcType="VARCHAR" property="spaceId" />
+    <result column="space_name" jdbcType="VARCHAR" property="spaceName" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
+    <result column="file_keys" jdbcType="VARCHAR" property="fileKeys" />
+    <result column="contentType" jdbcType="VARCHAR" property="contenttype" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="updateTime" jdbcType="TIMESTAMP" property="updatetime" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+
+  <select id="selectFileInfoByDownloadId" resultMap="BaseResultMap">
+
+select
+f.id ,f.file_number, f.file_name, f.md5, f.category_id, f.category_name, f.space_name, f.space_id, f.creator_id, f.creator_name, f.file_keys, f.detail, f.contentType, f.size , f.path, f.url, f.`status` , f.createTime, f.updateTime
+from download_fileInfo df
+join file_info f on df.fileInfo_id = f.id
+where df.download_id = #{downloadId}
+
+  </select>
+
+</mapper>
